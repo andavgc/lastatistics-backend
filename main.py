@@ -15,13 +15,13 @@ app = FastAPI()
 
 # origins = 'http://localhost:8000/'
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_credentials = True,
-#     allow_methods=["*"],
-#     allow_headers=["*"]
-# )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials = True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 def get_user_info(info_tpye, user:newUser):
     r = credentials.lastfm_get(info_tpye, user=user.user, period=user.period, limit=user.limit)
