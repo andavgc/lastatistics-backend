@@ -9,8 +9,6 @@ load_dotenv()
 client_id = os.getenv("API_KEY_LASTFM")
 client_secret = os.getenv("SHARED_SECRET_LASTFM")
 
-# auth_url=f"http://www.last.fm/api/auth/?api_key={client_id}&cb=http://localhost:3000/"
-
 def lastfm_get(method, user=None, period="overall", limit="50", page="1", track=None, artist=None):
     # define headers and URL
     headers = {'user-agent': "Dataquest"}
