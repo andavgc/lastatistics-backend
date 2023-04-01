@@ -13,7 +13,7 @@ from database import (
 
 app = FastAPI()
 
-# origins = 'http://localhost:8000/'
+origins = 'https://music-app-backend-plum.vercel.app/'
 
 app.add_middleware(
     CORSMiddleware,
