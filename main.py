@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Body
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from model import User, newUser
 from typing import List
@@ -13,15 +13,15 @@ from database import (
 
 app = FastAPI()
 
-origins = 'http://localhost:8000/'
+# origins = 'http://localhost:8000/'
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials = True,
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_credentials = True,
+#     allow_methods=["*"],
+#     allow_headers=["*"]
+# )
 
 def get_user_info(info_tpye, user:newUser):
     r = credentials.lastfm_get(info_tpye, user=user.user, period=user.period, limit=user.limit)

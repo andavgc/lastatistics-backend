@@ -1,4 +1,3 @@
-from requests import get
 import json
 import credentials
 

@@ -1,7 +1,5 @@
-from bson import ObjectId
-from fastapi import Query
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 
 class Track(BaseModel):
     album: str
