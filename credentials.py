@@ -11,7 +11,7 @@ client_secret = os.getenv("SHARED_SECRET_LASTFM")
 
 def lastfm_get(method, user=None, period="overall", limit="50", page="1", track=None, artist=None):
     # define headers and URL
-    headers = {'user-agent': "Dataquest"}
+    headers = {'user-agent': "andres"}
     url = "https://ws.audioscrobbler.com/2.0/"
     payload = {}
 
