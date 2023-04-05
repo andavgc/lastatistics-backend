@@ -56,6 +56,7 @@ def get_data(json_obj, user, period, limit):
         'length': limit,
         'tracklist':music_list
     }
+    print(music_obj)
     return music_obj
     
 def get_track_album(track_obj):

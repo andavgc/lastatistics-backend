@@ -22,8 +22,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-def get_user_info(info_tpye, user:newUser):
-    r = credentials.lastfm_get(info_tpye, user=user.user, period=user.period, limit=user.limit)
+def get_user_info(method, user:newUser):
+    r = credentials.lastfm_get(method, user=user.user, period=user.period, limit=user.limit)
     document = functions.get_data(r, user.user, user.period, user.limit)
     return document
 
@@ -48,7 +48,7 @@ async def get_user(user):
 async def post_tracklist(user:newUser):
     limit = "10"
     print(user)
-    document = get_user_info('user.gettoptracks', user)
+    document = get_user_info(user.method, user)
     response = await create_user(document)
     if response:
         return response
@@ -56,7 +56,8 @@ async def post_tracklist(user:newUser):
 
 @app.put("/api/music-info", response_model=User)
 async def put_tracklist(user:newUser):
-    document = get_user_info('user.gettoptracks', user)
+    print(user.method)
+    document = get_user_info(user.method, user)
     response = await update_user(document)
     if response:
         return response

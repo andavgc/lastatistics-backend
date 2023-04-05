@@ -1,8 +1,8 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 class Track(BaseModel):
-    album: str
+    album: Optional[str]
     artist: str
     cover: str
     name: str
@@ -19,3 +19,4 @@ class newUser(BaseModel):
     user: str
     period: str
     limit: str
+    method: str
