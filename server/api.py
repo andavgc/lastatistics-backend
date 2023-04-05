@@ -1,25 +1,18 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from model import User, newUser
 import credentials
 import functions
+from model import User, newUser
 from database import (
-    fetch_user,
-    fetch_all_users,
-    create_user,
-    update_user
-    )
+	fetch_all_users, 
+	fetch_user, 
+	create_user, 
+	update_user)
 
 app = FastAPI()
 
-origins = [
-    "https://music-app-backend-plum.vercel.app/"
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
-    "http://localhost",
-    "http://localhost:8080",
-    "http://0.0.0.0:8000/"
-]
+origins = 'https://music-app-backend-plum.vercel.app/'
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -28,8 +21,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-def get_user_info(info_tpye, user:newUser):
-    r = credentials.lastfm_get(info_tpye, user=user.user, period=user.period, limit=user.limit)
+def get_user_info(method, user:newUser):
+    r = credentials.lastfm_get(method, user=user.user, period=user.period, limit=user.limit)
     document = functions.get_data(r, user.user, user.period, user.limit)
     return document
 
@@ -45,7 +38,7 @@ async def get_info():
 @app.get("/api/music-info/{user}", response_model=User)
 async def get_user(user):
     response = await fetch_user(user)
-
+    
     if response:
         return response
     raise HTTPException(404, f"{user} not found")
@@ -54,7 +47,7 @@ async def get_user(user):
 async def post_tracklist(user:newUser):
     limit = "10"
     print(user)
-    document = get_user_info('user.gettoptracks', user)
+    document = get_user_info(user.method, user)
     response = await create_user(document)
     if response:
         return response
@@ -62,7 +55,8 @@ async def post_tracklist(user:newUser):
 
 @app.put("/api/music-info", response_model=User)
 async def put_tracklist(user:newUser):
-    document = get_user_info('user.gettoptracks', user)
+    print(user.method)
+    document = get_user_info(user.method, user)
     response = await update_user(document)
     if response:
         return response
