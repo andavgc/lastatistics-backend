@@ -3,7 +3,7 @@ from typing import List, Optional
 
 class Track(BaseModel):
     album: Optional[str]
-    artist: str
+    artist: Optional[str]
     cover: str
     name: str
     playcount: str
