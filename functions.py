@@ -54,7 +54,7 @@ def get_data(json_obj, user, period, limit):
         'user':user,
         'period': period,
         'length': limit,
-        'tracklist':music_list
+        'infolist':music_list
     }
     return music_obj
     

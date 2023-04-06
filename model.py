@@ -13,7 +13,7 @@ class User(BaseModel):
     user: str
     period: str
     length: str
-    tracklist: List[Track]
+    infolist: List[Track]
 
 class newUser(BaseModel):
     user: str

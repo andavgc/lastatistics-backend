@@ -35,14 +35,13 @@ async def fetch_all_users():
     return users
 
 async def create_user(document):
-    
-    new_user = collection.insert_one(document)
+    collection.insert_one(document)
     return document
 
 async def update_user(document):
     collection.update_one({"user":document["user"]},{"$set":{
         "period": document["period"],
         "length": document["length"],
-        "tracklist": document["tracklist"]}})
+        "infolist": document["infolist"]}})
     document = collection.find_one({"user":document["user"]})
     return document
