@@ -37,10 +37,10 @@ def get_data(json_obj, user, period, limit):
                 "playcount": item["playcount"]
             }
 
-            # try:
-            artist = get_artist_img(url, artist)
-            # except:
-            #     pass
+            try:
+                artist = get_artist_img(url, artist)
+            except:
+                pass
             music_list.append(artist)
     
     elif list(json_obj.keys())[0] == "toptracks":
