@@ -25,9 +25,11 @@ def get_data(json_obj, user, period, limit):
     
     elif list(json_obj.keys())[0] == "topartists":
         artists = json_obj["topartists"]["artist"]
-        url = artists[0]['url']
+        
         # url = json_obj["topartists"]["artist"]["url"]
         for item in artists:
+            
+            url = item["url"]
             
             artist = {
                 "name": item["name"],
@@ -77,10 +79,6 @@ def get_track_album(track_obj):
     return track_obj
 
 def get_artist_img(url, artist_obj):
-
-    headers = {
-        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
-    }
 
     r = requests.get(url)
     soup = BeautifulSoup(r.content, 'lxml')
