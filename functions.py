@@ -1,5 +1,8 @@
 import json
+
+import requests
 import credentials
+from bs4 import BeautifulSoup
 
 def get_data(json_obj, user, period, limit):
     
@@ -21,8 +24,9 @@ def get_data(json_obj, user, period, limit):
             music_list.append(album)
     
     elif list(json_obj.keys())[0] == "topartists":
-        artists = json_obj["topartists"]["artists"]
-
+        artists = json_obj["topartists"]["artist"]
+        url = artists[0]['url']
+        # url = json_obj["topartists"]["artist"]["url"]
         for item in artists:
             
             artist = {
@@ -31,6 +35,8 @@ def get_data(json_obj, user, period, limit):
                 "cover": item["image"][-1]["#text"],
                 "playcount": item["playcount"]
             }
+
+            artist = get_artist_img(url, artist)
             music_list.append(artist)
     
     elif list(json_obj.keys())[0] == "toptracks":
@@ -69,6 +75,24 @@ def get_track_album(track_obj):
         track_obj["album"] = track_obj["name"]
         track_obj["cover"] = track_obj["cover"]
     return track_obj
+
+def get_artist_img(url, artist_obj):
+
+    headers = {
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+    }
+
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, 'lxml')
+    anchor = soup.find('a', class_="header-new-gallery header-new-gallery--link hidden-xs link-block-target")
+    img_url = "https://www.last.fm" + anchor['href']
+    r = requests.get(img_url)
+    soup = BeautifulSoup(r.content, 'lxml')
+    img_source = soup.find('img', class_="js-gallery-image")
+    img = img_source["src"]
+    
+    artist_obj["cover"] = img
+    return artist_obj
 
 def create_json_file(obj, path, name):
     result = json.dumps(obj, sort_keys=True, indent=4)

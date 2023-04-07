@@ -35,7 +35,7 @@ async def fetch_all_users():
     return users
 
 async def create_user(document):
-    collection.insert_one(document)
+    new_user = collection.insert_one(document)
     return document
 
 async def update_user(document):

@@ -45,8 +45,6 @@ async def get_user(user):
 
 @app.post("/api/music-info", response_model=User)
 async def post_tracklist(user:newUser):
-    limit = "10"
-    print(user)
     document = get_user_info(user.method, user)
     response = await create_user(document)
     if response:
