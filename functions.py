@@ -37,10 +37,10 @@ def get_data(json_obj, user, period, limit):
                 "playcount": item["playcount"]
             }
 
-            try:
-                artist = get_artist_img(url, artist)
-            except:
-                pass
+            # try:
+            artist = get_artist_img(url, artist)
+            # except:
+            #     pass
             music_list.append(artist)
     
     elif list(json_obj.keys())[0] == "toptracks":
@@ -84,16 +84,18 @@ def get_track_album(track_obj):
 
 def get_artist_img(url, artist_obj):
 
+    #getting artist gallery url
     r = requests.get(url)
     soup = BeautifulSoup(r.content, 'lxml')
     anchor = soup.find('a', class_="header-new-gallery header-new-gallery--link hidden-xs link-block-target")
-    img_url = "https://www.last.fm" + anchor['href']
-    r = requests.get(img_url)
+    gallery_url = "https://www.last.fm" + anchor['href']
+
+    #getting url for the first image in gallery
+    r = requests.get(gallery_url)
     soup = BeautifulSoup(r.content, 'lxml')
     img_source = soup.find('img', class_="js-gallery-image")
-    img = img_source["src"]
-    
-    artist_obj["cover"] = img
+    artist_obj["cover"] = img_source["src"]
+
     return artist_obj
 
 def create_json_file(obj, path, name):
