@@ -26,7 +26,6 @@ def get_data(json_obj, user, period, limit):
     elif list(json_obj.keys())[0] == "topartists":
         artists = json_obj["topartists"]["artist"]
         
-        # url = json_obj["topartists"]["artist"]["url"]
         for item in artists:
             
             url = item["url"]
@@ -38,7 +37,10 @@ def get_data(json_obj, user, period, limit):
                 "playcount": item["playcount"]
             }
 
-            artist = get_artist_img(url, artist)
+            try:
+                artist = get_artist_img(url, artist)
+            except:
+                pass
             music_list.append(artist)
     
     elif list(json_obj.keys())[0] == "toptracks":
@@ -54,8 +56,10 @@ def get_data(json_obj, user, period, limit):
                 "playcount": item["playcount"]
             }
             
-            track = get_track_album(track)
-            
+            try:
+                track = get_track_album(track)
+            except:
+                pass         
             music_list.append(track)
 
     music_obj = {
